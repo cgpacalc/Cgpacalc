@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BE CGPA Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      margin-top: 40px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 360px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: #007bff;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .grade-buttons button {
+      width: 70px;
+      margin: 8px;
+      background: #6c757d;
+    }
+
+    .grade-buttons button:hover {
+      background: #495057;
+    }
+
+    .result-box {
+      background: #f9f9f9;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 14px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .final-result {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #222;
+    }
+
+    .reset-btn {
+      background: #dc3545;
+    }
+
+    .reset-btn:hover {
+      background: #a71d2a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>BE CGPA Calculator</h2>
+    <label for="subjects">Number of Subjects:</label><br>
+    <input type="number" id="subjects" min="1" max="20" value="5"><br>
+    <button onclick="startCalculator()">Start</button>
+
+    <div id="grade-section" style="display:none;">
+      <h4 id="subject-label"></h4>
+      <div class="grade-buttons">
+        <button onclick="addGrade('O',10)">O</button>
+        <button onclick="addGrade('A+',9)">A+</button>
+        <button onclick="addGrade('A',8)">A</button>
+        <button onclick="addGrade('B+',7)">B+</button>
+        <button onclick="addGrade('B',6)">B</button>
+        <button onclick="addGrade('RA',0)">RA</button>
+      </div>
+    </div>
+
+    <div class="result-box" id="result"></div>
+    <div class="final-result" id="final"></div>
+    <button class="reset-btn" onclick="resetCalc()">Reset</button>
+  </div>
+
+  <script>
+    let totalSubjects = 0;
+    let currentSubject = 1;
+    let grades = [];
+
+    function startCalculator() {
+      totalSubjects = parseInt(document.getElementById("subjects").value);
+      if (totalSubjects > 0) {
+        grades = [];
+        currentSubject = 1;
+        document.getElementById("grade-section").style.display = "block";
+        document.getElementById("subject-label").innerText = `Subject ${currentSubject} of ${totalSubjects}: Select a grade`;
+        document.getElementById("result").innerHTML = "";
+        document.getElementById("final").innerHTML = "";
+      }
+    }
+
+    function addGrade(grade, point) {
+      grades.push(point);
+      let resultBox = document.getElementById("result");
+      resultBox.innerHTML += `Subject ${currentSubject}: ${grade} → ${point}<br>`;
+
+      if (currentSubject === totalSubjects) {
+        calculateCGPA();
+      } else {
+        currentSubject++;
+        document.getElementById("subject-label").innerText = `Subject ${currentSubject} of ${totalSubjects}: Select a grade`;
+      }
+    }
+
+    function calculateCGPA() {
+      let sum = grades.reduce((a, b) => a + b, 0);
+      let cgpa = (sum / totalSubjects).toFixed(2);
+
+      let finalGrade = "";
+      if (cgpa >= 9.0) finalGrade = "O (Outstanding)";
+      else if (cgpa >= 8.0) finalGrade = "A+ (Excellent)";
+      else if (cgpa >= 7.0) finalGrade = "A (Very Good)";
+      else if (cgpa >= 6.0) finalGrade = "B+ (Good)";
+      else if (cgpa >= 5.0) finalGrade = "B (Average)";
+      else finalGrade = "RA (Re-appear)";
+
+      document.getElementById("final").innerText = `CGPA: ${cgpa} | Final Grade: ${finalGrade}`;
+    }
+
+    function resetCalc() {
+      document.getElementById("subjects").value = 5;
+      document.getElementById("grade-section").style.display = "none";
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("final").innerHTML = "";
+      grades = [];
+      currentSubject = 1;
+    }
+  </script>
+</body>
+</html>
