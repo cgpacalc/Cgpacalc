@@ -19,3 +19,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+---
+
+👉 Steps for GitHub:
+1. Create a new repository (e.g., `CGPA-Calculator`).  
+2. Upload your `index.html`, `style.css`, `script.js`, and `README.md`.  
+3. Enable **GitHub Pages** for live hosting.  
+
+---
+
+Would you like me to **write the `script.js` separately** (so all 3 files are independent: `index.html`, `style.css`, `script.js`) instead of having JS inside HTML?
